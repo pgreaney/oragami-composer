@@ -1,0 +1,1 @@
+"""GraphQL mutations module."""

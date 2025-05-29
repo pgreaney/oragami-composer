@@ -1,0 +1,32 @@
+# Core dependencies
+fastapi==0.109.0
+uvicorn[standard]==0.27.0
+strawberry-graphql[fastapi]==0.217.1
+sqlalchemy==2.0.25
+alembic==1.13.1
+psycopg2-binary==2.9.9
+redis==5.0.1
+celery==5.3.4
+pydantic==2.5.3
+pydantic-settings==2.1.0
+python-dotenv==1.0.0
+
+# Authentication
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+python-multipart==0.0.6
+
+# Market data and analysis
+requests==2.31.0
+pandas==2.1.4
+numpy==1.26.3
+ta-lib==0.4.28
+quantstats==0.0.62
+matplotlib==3.8.2
+
+# Trading integration
+alpaca-py==0.13.3
+
+# Utilities
+httpx==0.26.0
+aiofiles==23.2.1
