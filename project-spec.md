@@ -25,10 +25,13 @@ Power users and algorithmic traders who want to test Composer.trade symphonies w
 ### Paper Trading Engine
 - [ ] Alpaca paper trading API integration for execution only (no live trading)
 - [ ] Automated trade execution based on symphony algorithms
-- [ ] Daily rebalancing within 10 minutes of market close (15:50-16:00 EST)
+- [ ] Daily evaluation window at 15:50-16:00 EST with sophisticated rebalancing logic:
+  - [ ] Time-based rebalancing: Execute trades on schedule (daily, weekly, monthly, quarterly, yearly)
+  - [ ] Threshold-based rebalancing: Execute trades only when portfolio drift exceeds configured corridor width (e.g., 7.5%)
 - [ ] Real-time position tracking and updates
 - [ ] Support for equities and ETFs (no options)
 - [ ] Multiple symphonies per user account management (up to 40)
+- [ ] Portfolio drift calculation engine for threshold-based symphonies
 - [ ] Error handling with automatic liquidation to cash on algorithm failures
 
 ### Performance Analytics
@@ -67,7 +70,10 @@ Power users and algorithmic traders who want to test Composer.trade symphonies w
 ## Other Notes
 
 - Sample Composer.trade symphony JSON files will be provided during development showing full algorithmic complexity
-- Symphony rebalancing occurs once daily within the 15:50-16:00 EST window (closer to end time is better)
+- Symphony evaluation occurs daily within the 15:50-16:00 EST window (closer to end time is better)
+- Actual rebalancing is determined by each symphony's configuration:
+  - Time-based: Rebalance on fixed schedule (daily, weekly, monthly, quarterly, yearly)
+  - Threshold-based: Rebalance only when portfolio drift exceeds configured percentage
 - No modification of symphonies allowed - users must edit in Composer.trade to preserve algorithmic integrity
 - Symphonies contain complex conditional logic, technical indicators, and asset selection algorithms that must be executed precisely
 - Emphasis on reliable daily execution within the specified time window

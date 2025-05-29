@@ -75,12 +75,15 @@
 - **UI/UX Considerations**: Drag-and-drop upload, symphony library grid view, status indicators
 
 ### 4.3 Paper Trading Engine
-- **User Story & Requirements**: Automated execution of trades based on symphony algorithms with daily rebalancing at 15:50-16:00 EST
+- **User Story & Requirements**: Automated execution of trades based on symphony algorithms with sophisticated rebalancing logic evaluated daily at 15:50-16:00 EST
 - **Implementation Details**: 
-  - Celery Beat scheduler for precise 15:50 EST daily execution
+  - Celery Beat scheduler for precise 15:50 EST daily evaluation window
   - Alpaca paper trading API integration (no live trading)
-  - Daily rebalancing within 10-minute window before market close
-  - Support for up to 1,600 daily executions (40 users × 40 symphonies)
+  - Sophisticated rebalancing logic:
+    - **Time-based**: Execute on schedule (daily, weekly, monthly, quarterly, yearly)
+    - **Threshold-based**: Execute only when portfolio drift exceeds configured corridor width
+  - Support for up to 1,600 daily evaluations (40 users × 40 symphonies)
+  - Drift calculation engine for threshold-based rebalancing
 - **Edge Cases & Error Handling**: API rate limits, failed orders, market closures, insufficient buying power, algorithm failures trigger liquidation to cash
 - **UI/UX Considerations**: Real-time position updates, trade history, execution status indicators, liquidation notifications
 
@@ -180,6 +183,9 @@ class RebalanceFrequency:
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
+    QUARTERLY = "quarterly"
+    YEARLY = "yearly"
+    NONE = "none"  # For threshold-based rebalancing
 
 # Complex Symphony Step Types
 @strawberry.type
@@ -207,6 +213,9 @@ class SymphonyStep:
     rhs_fn_params: Optional[dict] = None
     comparator: Optional[str] = None  # 'gt', 'lt', 'gte', 'lte', 'eq'
     is_else_condition: Optional[bool] = None
+    
+    # Rebalancing fields
+    rebalance_corridor_width: Optional[float] = None  # For threshold-based rebalancing (e.g., 0.075 = 7.5%)
     
     # Filter/sort fields
     sort_by_fn: Optional[str] = None
@@ -512,6 +521,8 @@ function SymphonyDashboard() {
 - **MarketDataService**: Real-time and historical market data integration
 - **BacktestService**: Historical algorithm simulation with full decision tree execution
 - **AnalyticsService**: Performance metrics calculation using quantstats
+- **RebalancingService**: Symphony eligibility determination with time-based and threshold-based logic
+- **DriftCalculationService**: Portfolio drift analysis for threshold-based rebalancing
 
 ### 7.3 Algorithm Execution Examples
 ```python

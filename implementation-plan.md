@@ -18,7 +18,9 @@
 - **Architecture**: Python backend with FastAPI + Strawberry GraphQL, React frontend with Apollo Client, comprehensive testing (90%+ coverage)
 - **Testing Requirements**: All algorithm calculations must be tested for accuracy, behavioral testing for user workflows, performance testing for 40 concurrent users
 - **Configuration**: Use .env files for all environments, no environment variables during development
-- **Execution Timing**: Daily rebalancing within 10 minutes of market close (15:50-16:00 EST), closer to end time is better
+- **Execution Timing**: Daily evaluation window at 15:50-16:00 EST for all symphonies, with sophisticated rebalancing logic:
+  - **Time-based rebalancing**: Execute on schedule (daily, weekly, monthly, quarterly, yearly)
+  - **Threshold-based rebalancing**: Only execute when portfolio drift exceeds configured corridor width (e.g., 7.5%)
 - **Error Handling**: Algorithm failures result in immediate liquidation to cash positions
 
 ### Workspace Setup Instructions
@@ -376,9 +378,12 @@ This implementation plan provides a systematic approach to building Oragami Comp
 **Estimated Timeline**: 8 weeks for full implementation with dedicated development resources, with core trading functionality available after steps 1-13 (5-6 weeks).
 
 **Daily Execution Architecture**: 
-- 40 users × 40 symphonies = 1,600 potential daily executions
-- 10-minute execution window (15:50-16:00 EST)
+- 40 users × 40 symphonies = 1,600 potential daily evaluations
+- 10-minute execution window (15:50-16:00 EST) for checking all symphonies
 - Parallel processing with 8-12 Celery workers
+- Sophisticated execution eligibility logic:
+  - Time-based symphonies: Check if today matches rebalancing schedule
+  - Threshold-based symphonies: Calculate portfolio drift vs. corridor width
 - Pre-fetched market data for optimal performance
 - Automatic error handling with cash liquidation
 

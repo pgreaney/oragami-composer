@@ -8,6 +8,9 @@ from app.graphql.queries.symphony import SymphonyQueries
 from app.graphql.queries.trading import TradingQueries
 from app.graphql.mutations.auth import AuthMutations
 from app.graphql.mutations.symphony import SymphonyMutations
+from app.graphql.subscriptions.positions import PositionSubscription
+from app.graphql.subscriptions.trades import TradeSubscription
+from app.graphql.subscriptions.metrics import MetricsSubscription
 from app.graphql.context import get_context
 
 
@@ -27,10 +30,17 @@ class Mutation(AuthMutations, SymphonyMutations):
     pass
 
 
+@strawberry.type
+class Subscription(PositionSubscription, TradeSubscription, MetricsSubscription):
+    """Root Subscription type combining all subscriptions."""
+    pass
+
+
 # Create the GraphQL schema
 schema = strawberry.Schema(
     query=Query,
-    mutation=Mutation
+    mutation=Mutation,
+    subscription=Subscription
 )
 
 
