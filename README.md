@@ -80,6 +80,16 @@ cd frontend
 npm install
 ```
 
+### 5. Initialize Database
+```bash
+# Run database migrations
+cd backend
+alembic upgrade head
+
+# Initialize TimescaleDB extensions
+python -m app.database.init_db
+```
+
 ## 🏃‍♂️ Running the Application
 
 ### Using Docker (Recommended)
@@ -131,6 +141,17 @@ npm run dev
 - Full algorithm simulation with decision tree execution
 - Side-by-side comparison with live performance
 - Technical indicator calculations on historical data
+
+## 🔌 API Access
+
+### GraphQL Endpoint
+- URL: `http://localhost:8000/graphql`
+- GraphiQL UI: `http://localhost:8000/graphql` (development only)
+
+### Authentication
+- Register/Login via GraphQL mutations
+- JWT tokens for API access
+- Alpaca OAuth for paper trading connection
 
 ## 🧪 Testing
 
@@ -187,9 +208,40 @@ npm run e2e
 
 ## 🚧 Current Status
 
+### ✅ Completed (Steps 1-8)
 - [x] Step 1: Project structure and development environment setup
-- [x] Step 2: Database schema and SQLAlchemy setup
-- [ ] Step 3-19: See [Implementation Plan](implementation-plan.md) for full roadmap
+- [x] Step 2: Database schema and SQLAlchemy setup with TimescaleDB
+- [x] Step 3: JWT authentication system
+- [x] Step 4: Alpaca OAuth 2.0 integration (paper trading)
+- [x] Step 5: GraphQL API setup with Strawberry
+- [x] Step 6: Symphony algorithmic management with complex JSON parsing
+- [x] Step 7: Market data integration (Alpha Vantage + EOD Historical)
+- [x] Step 8: Trading operations GraphQL API with Alpaca integration
+
+### 🔄 In Progress
+- [ ] Step 9: Daily Algorithmic Execution & Background Processing
+- [ ] Step 10: Real-time GraphQL Subscriptions
+
+### 📅 Upcoming
+- [ ] Step 11-19: Frontend development, analytics, backtesting, and deployment
+- See [Implementation Plan](implementation-plan.md) for full roadmap
+
+## 🏛️ Backend Architecture
+
+### Core Components
+- **Authentication**: JWT-based auth with secure password hashing
+- **GraphQL API**: Type-safe API with Strawberry GraphQL
+- **Symphony Parser**: Complex JSON parsing for Composer.trade algorithms
+- **Market Data Service**: Dual-source integration with intelligent caching
+- **Trading Service**: Position management and trade execution
+- **Error Handler**: Automatic liquidation on algorithm failures
+
+### Key Technologies
+- **FastAPI**: High-performance async web framework
+- **SQLAlchemy**: ORM with TimescaleDB support
+- **Strawberry GraphQL**: Modern Python GraphQL library
+- **Redis**: Caching and task queue broker
+- **Celery**: Distributed task processing
 
 ## 📞 Support
 
